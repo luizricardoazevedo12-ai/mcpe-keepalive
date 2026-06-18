@@ -6,9 +6,10 @@ on:
 jobs:
   keepalive:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - run: npm install bedrock-protocol
-      - run: node -e "const {Client}=require('bedrock-protocol');const c=new Client({host:'dynamic-10.magmanode.com',port:25768,username:'Bot24H',offline:true});c.on('spawn',()=>{console.log('Bot24H entrou');setTimeout(()=>{c.disconnect();process.exit(0)},30000)});c.on('error',e=>{process.exit(0)});setTimeout(()=>process.exit(0),45000);"
+      - run: timeout 40 node -e "const {Client}=require('bedrock-protocol');const c=new Client({host:'dynamic-10.magmanode.com',port:25768,username:'Bot24H',offline:true});c.on('spawn',()=>{console.log('>>> Bot24H ENTROU <<<');setTimeout(()=>process.exit(0),5000)});c.on('error',e=>{console.log('ERRO:',e.message);process.exit(0)});setTimeout(()=>{console.log('TIMEOUT');process.exit(0)},35000);"
