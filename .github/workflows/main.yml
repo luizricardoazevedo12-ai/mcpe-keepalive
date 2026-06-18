@@ -1,0 +1,24 @@
+name: Keepalive MCPE 0.15
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Ping servidor
+        run: python main.py
+        env:
+          MC_HOST: dynamic-10.magmanode.com
+          MC_PORT: 25768
